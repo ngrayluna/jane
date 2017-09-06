@@ -189,10 +189,10 @@ SauerlachLessThan1RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
         "SauerlachLessThan1RetrievePermissionPlugin",
         magnitude_threshold=1.0, site="geothermie_sauerlach")
-PoingLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "PoingLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_poing")
+# PoingLessThan1RetrievePermissionPlugin = \
+#     _site_magnitude_threshold_retrieve_permission(
+#         "PoingLessThan1RetrievePermissionPlugin",
+#         magnitude_threshold=1.0, site="geothermie_poing")
 UnknownLessThan1RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
         "UnknownLessThan1RetrievePermissionPlugin",
@@ -226,10 +226,10 @@ SauerlachLessThan2RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
         "SauerlachLessThan2RetrievePermissionPlugin",
         magnitude_threshold=2.0, site="geothermie_sauerlach")
-PoingLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "PoingLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_poing")
+# PoingLessThan2RetrievePermissionPlugin = \
+#     _site_magnitude_threshold_retrieve_permission(
+#         "PoingLessThan2RetrievePermissionPlugin",
+#         magnitude_threshold=2.0, site="geothermie_poing")
 UnknownLessThan2RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
         "UnknownLessThan2RetrievePermissionPlugin",
