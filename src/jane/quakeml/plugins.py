@@ -153,10 +153,10 @@ MagnitudeLessThan05RetrievePermissionPlugin = \
         "MagnitudeLessThan05RetrievePermissionPlugin", magnitude_threshold=0.5)
 MagnitudeLessThan1RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
-        "MagnitudeLessThan1RetrievePermissionPlugin", magnitude_threshold=1.0)
+        "MagnitudeLessThan1RetrievePermissionPlugin", magnitude_threshold=0.95)
 MagnitudeLessThan2RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
-        "MagnitudeLessThan2RetrievePermissionPlugin", magnitude_threshold=2.0)
+        "MagnitudeLessThan2RetrievePermissionPlugin", magnitude_threshold=1.95)
 
 # Retrieve permissions for small events attributed to a specific site (e.g. a
 # specific deep geothermal project), if users don't have these permissions
@@ -193,7 +193,7 @@ sites = [
 # add all site/magnitude-threshold permission plugins
 local = locals()
 for site_ in sites:
-    for mag_threshold, mag_string in zip((0.5, 1.0, 2.0), ('05', '1', '2')):
+    for mag_threshold, mag_string in zip((0.5, 0.95, 1.95), ('05', '1', '2')):
         permission_plugin_name = '{}LessThan{}RetrievePermissionPlugin'.format(
             site_, mag_string)
         local[permission_plugin_name] = \
