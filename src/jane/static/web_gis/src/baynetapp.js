@@ -203,13 +203,13 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     })
 
     $scope.center = {
-        latitude: 48.505,
-        longitude: 12.09,
-        zoom: 5
+        latitude: 48.05,
+        longitude: 11.63,
+        zoom: 11
     };
 
     $scope.rotation = 0;
-    $scope.base_layer_opacity = 100.0;
+    $scope.base_layer_opacity = 40.0;
 
     $scope.show_bavaria_outline = false;
 
