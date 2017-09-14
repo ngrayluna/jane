@@ -148,6 +148,9 @@ def _site_magnitude_threshold_retrieve_permission(
 
 # Retrieve permissions for small events, if users don't have these permissions
 # small events are not accessible to them
+MagnitudeLessThan05RetrievePermissionPlugin = \
+    _site_magnitude_threshold_retrieve_permission(
+        "MagnitudeLessThan05RetrievePermissionPlugin", magnitude_threshold=0.5)
 MagnitudeLessThan1RetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
         "MagnitudeLessThan1RetrievePermissionPlugin", magnitude_threshold=1.0)
@@ -158,79 +161,45 @@ MagnitudeLessThan2RetrievePermissionPlugin = \
 # Retrieve permissions for small events attributed to a specific site (e.g. a
 # specific deep geothermal project), if users don't have these permissions
 # small events that are attributed to that site are not accessible to them
-UnterhachingLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "UnterhachingLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_unterhaching")
-OberhachingLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "OberhachingLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_oberhaching")
-TaufkirchenLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "TaufkirchenLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_taufkirchen")
-KirchstockachLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "KirchstockachLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_kirchstockach")
-PullachLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "PullachLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_pullach")
-DuerrnhaarLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "DuerrnhaarLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_dürrnhaar")
-SauerlachLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "SauerlachLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_sauerlach")
-# PoingLessThan1RetrievePermissionPlugin = \
-#     _site_magnitude_threshold_retrieve_permission(
-#         "PoingLessThan1RetrievePermissionPlugin",
-#         magnitude_threshold=1.0, site="geothermie_poing")
-UnknownLessThan1RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "UnknownLessThan1RetrievePermissionPlugin",
-        magnitude_threshold=1.0, site="geothermie_unknown")
+sites = [
+    "Altdorf",
+    "Aschheim",
+    "Duerrnhaar",
+    "Erding",
+    "Freiham",
+    "Garching",
+    "Hoehenrain",
+    "Holzkirchen",
+    "Ismaning",
+    "Kirchstockach",
+    "Kirchweidach",
+    "Oberhaching",
+    "Poing",
+    "Pullach",
+    "Riem",
+    "Sauerlach",
+    "Simbach",
+    "Straubing",
+    "Taufkirchen",
+    "Traunreut",
+    "Unterfoehring",
+    "Unterhaching",
+    "Unterschleissheim",
+    "Waldkraiburg",
+    "Weilheim",
+    "UNKNOWN",
+    ]
 
-UnterhachingLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "UnterhachingLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_unterhaching")
-OberhachingLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "OberhachingLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_oberhaching")
-TaufkirchenLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "TaufkirchenLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_taufkirchen")
-KirchstockachLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "KirchstockachLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_kirchstockach")
-PullachLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "PullachLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_pullach")
-DuerrnhaarLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "DuerrnhaarLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_dürrnhaar")
-SauerlachLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "SauerlachLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_sauerlach")
-# PoingLessThan2RetrievePermissionPlugin = \
-#     _site_magnitude_threshold_retrieve_permission(
-#         "PoingLessThan2RetrievePermissionPlugin",
-#         magnitude_threshold=2.0, site="geothermie_poing")
-UnknownLessThan2RetrievePermissionPlugin = \
-    _site_magnitude_threshold_retrieve_permission(
-        "UnknownLessThan2RetrievePermissionPlugin",
-        magnitude_threshold=2.0, site="geothermie_unknown")
+# add all site/magnitude-threshold permission plugins
+local = locals()
+for site_ in sites:
+    for mag_threshold, mag_string in zip((0.5, 1.0, 2.0), ('05', '1', '2')):
+        permission_plugin_name = '{}LessThan{}RetrievePermissionPlugin'.format(
+            site_, mag_string)
+        local[permission_plugin_name] = \
+            _site_magnitude_threshold_retrieve_permission(
+                permission_plugin_name, magnitude_threshold=mag_threshold,
+                site="Geothermie_{}".format(site_))
 
 
 class QuakeMLIndexerPlugin(IndexerPluginPoint):
