@@ -117,10 +117,7 @@ def _site_magnitude_threshold_retrieve_permission(
         def filter_queryset_user_does_not_have_permission(self, queryset,
                                                           model_type):
             # model_type can be document or document index.
-            if model_type == "document":
-                # XXX: Find a good way to do this.
-                raise NotImplementedError()
-            elif model_type == "index":
+            if model_type in ["document", "index"]:
                 # Modify the queryset to only contain indices that are above
                 # given magnitude threshold.
                 # XXX check what happens with events that have null for
