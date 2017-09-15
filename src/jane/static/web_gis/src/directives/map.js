@@ -406,32 +406,32 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
 
 
             // a DragBox interaction used to select features by drawing boxes
-            var dragBox = new ol.interaction.DragBox({
-                condition: ol.events.condition.shiftKeyOnly
+            // var dragBox = new ol.interaction.DragBox({
+            //     condition: ol.events.condition.shiftKeyOnly
 
-            });
+            // });
 
-            map.addInteraction(dragBox);
+            // map.addInteraction(dragBox);
 
-            dragBox.on('boxend', function(e) {
-                var extent = dragBox.getGeometry().getExtent();
+            // dragBox.on('boxend', function(e) {
+            //     var extent = dragBox.getGeometry().getExtent();
 
-                var events_to_download = [];
-                $scope.event_layer.getSource().forEachFeatureIntersectingExtent(extent, function(feature) {
-                    events_to_download.push(feature.get("containing_document_data_url"));
-                });
+            //     var events_to_download = [];
+            //     $scope.event_layer.getSource().forEachFeatureIntersectingExtent(extent, function(feature) {
+            //         events_to_download.push(feature.get("containing_document_data_url"));
+            //     });
 
-                if (events_to_download.length > 0) {
-                    // Open modal to show download dialog.
-                    var modal = $modal({
-                        title: "Downloading " + events_to_download.length + " events ...",
-                        template: "./templates/download_events_modal.tpl.html",
-                        persist: false,
-                        show: true});
-                    // Set scope of modal.
-                    modal.$scope.events_to_download = events_to_download;
-                }
-            });
+            //     if (events_to_download.length > 0) {
+            //         // Open modal to show download dialog.
+            //         var modal = $modal({
+            //             title: "Downloading " + events_to_download.length + " events ...",
+            //             template: "./templates/download_events_modal.tpl.html",
+            //             persist: false,
+            //             show: true});
+            //         // Set scope of modal.
+            //         modal.$scope.events_to_download = events_to_download;
+            //     }
+            // });
 
             var detectFeatureType = function(feature) {
                 if (feature.get('network')) {
