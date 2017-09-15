@@ -11,7 +11,7 @@
     <!--Components CSS-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
           rel="stylesheet" type="text/css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css"
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css"
           rel="stylesheet" type="text/css">
     <link href="./css/ol_3.13.1.css" rel="stylesheet" type="text/css">
     <link href="./css/bootstrap-additions.0.2.3.min.css" rel="stylesheet"
@@ -72,22 +72,22 @@
     </div>
 
     <div class="container-fluid">
-        <h4>Induzierte Seismizität in Bayern</h4>
+        <h3>Induzierte Seismizität in Bayern</h3>
     </div>
 
 
     <div class="sidebar-header">
 
         <toggle-switch model="show_event_layer" class="switch-mini"
-                       on-label="Show" off-label="hide"
+                       on-label="An" off-label="Aus"
                        style="position:absolute; margin-top:5px; margin-left: 5px">
         </toggle-switch>
         <span class="input-group-addon">
-            <i class="fa fa-dot-circle-o"></i> Earthquakes
+            <i class="fa fa-dot-circle-o"></i> Erdbeben
             <!--NEEDS DIFFERENT WAY TO LAYOUT!-->
             <toggle-switch model="event_layer_show_points"
                            class="switch-mini switch-default"
-                           on-label="Points" off-label="Heatmap"
+                           on-label="Punkte" off-label="Heatmap"
                            style="position:absolute;
                            margin-top: -2px; margin-left: 50px">
             </toggle-switch>
@@ -105,7 +105,7 @@
             <div class="col-md-4">
                 <label>
                     <i class="fa fa-calendar"></i>
-                    <small>Time Range</small>
+                    <small>Zeitraum</small>
                 </label>
             </div>
             <div class="col-md-4 event-timepicker">
@@ -175,7 +175,7 @@
             <div class="col-md-6">
                 <label>
                     <i class="fa fa-users"></i>
-                    <small>Authors</small>
+                    <small>Autoren</small>
                 </label>
             </div>
         </div>
@@ -204,21 +204,7 @@
             <div class="col-md-4">
                 <toggle-switch model="event_settings.show_public_and_private"
                                class="switch-mini switch-default"
-                               on-label="all" off-label="public"
-                               style="width:100%">
-                </toggle-switch>
-            </div>
-            <div class="col-md-2">
-                <label>
-                    <small>
-                        Methode
-                    </small>
-                </label>
-            </div>
-            <div class="col-md-4">
-                <toggle-switch model="event_settings.show_automatic_and_manual"
-                               class="switch-mini switch-default"
-                               on-label="all" off-label="manual"
+                               on-label="alle" off-label="öffentliche"
                                style="width:100%">
                 </toggle-switch>
             </div>
@@ -226,8 +212,8 @@
 
         <div class="row">
             <div class="col-md-12">
-                <small>Total Available Events:
-                    {{ geojson_events.features.length }}
+                <small><i class="fa fa-search"></i> <b>Angezeigte Ereignisse:
+                        {{ geojson_events.features.length }}</b>
                 </small>
             </div>
         </div>
@@ -237,11 +223,11 @@
 
     <div class="sidebar-header">
         <toggle-switch model="show_station_layer" class="switch-mini"
-                       on-label="Show" off-label="hide"
+                       on-label="An" off-label="Aus"
                        style="position:absolute; margin-top:5px; margin-left: 5px">
         </toggle-switch>
         <span class="input-group-addon">
-            <i class="fa fa-th"></i> Stations
+            <i class="fa fa-map-marker"></i> Stationen
         </span>
     </div>
 
@@ -251,7 +237,7 @@
             <div class="col-md-4">
                 <label>
                     <i class="fa fa-calendar"></i>
-                    <small>Time Range</small>
+                    <small>Zeitraum</small>
                 </label>
             </div>
             <div class="col-md-4 event-timepicker">
@@ -282,7 +268,7 @@
             <div class="col-md-8">
                 <label>
                     <small>
-                        Grey Out Currently Inactive Stations
+                        aktuell nicht mehr laufende Stationen ausgrauen?
                     </small>
                 </label>
             </div>
@@ -290,6 +276,7 @@
                 <toggle-switch
                         model="station_settings.grey_out_inactive_stations"
                         class="switch-mini"
+                        on-label="Ja" off-label="Nein"
                         style="width:100%">
                 </toggle-switch>
             </div>
@@ -301,7 +288,7 @@
 
     <div class="sidebar-header">
         <span class="input-group-addon">
-            <i class="fa fa-th"></i> Map Settings
+            <i class="fa fa-map-o"></i> Karten Einstellungen
         </span>
     </div>
 
@@ -309,7 +296,7 @@
         <div class="row">
 
             <div class="col-md-4">
-                <small>Base Layer</small>
+            <small><i class="fa fa-map-o"></i> Karten Layer</small>
             </div>
 
             <div class="col-md-8">
@@ -329,7 +316,7 @@
         <div class="row">
 
             <div class="col-md-4">
-                <small>Rotation: {{ rotation }}°</small>
+              <small><i class="fa fa-rotate-right"></i> Rotation: {{ rotation }}°</small>
             </div>
 
             <div class="col-md-8">
@@ -349,7 +336,7 @@
         <div class="row">
 
             <div class="col-md-4">
-                <small>Opacity: {{ base_layer_opacity }}%</small>
+                <small>Deckkraft: {{ base_layer_opacity }}%</small>
             </div>
 
             <div class="col-md-8">
@@ -365,26 +352,26 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <small>Bavaria Overlay</small>
+                <small>Landesgrenze</small>
             </div>
             <div class="col-md-8">
                 <toggle-switch model="show_bavaria_outline"
                                class="switch-mini"
-                               on-label="on" off-label="off">
+                               on-label="An" off-label="Aus">
                 </toggle-switch>
             </div>
         </div>
         <div class="row" style="padding-top: 5px">
             <div class="col-md-3">
-                <small>Zoom to</small>
+                <small>Zoomen auf</small>
             </div>
             <div class="col-md-9">
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(12, 49, 7)">Bayern</a>
+                   ng-click="panTo(11.5, 48.6, 8)">Bayern</a>
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(11.63, 48.05, 11)">München</a>
+                   ng-click="panTo(11.65, 48.1, 10)">München</a>
             </div>
         </div>
     </div>
