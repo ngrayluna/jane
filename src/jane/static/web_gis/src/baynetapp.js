@@ -237,9 +237,12 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     $scope.show_station_layer = true;
     $scope.event_layer_show_points = true;
 
+    var currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
+
     $scope.event_settings = {
         "min_date": new Date("2000-01-01"),
-        "max_date": new Date(),
+        "max_date": currentDate,
         "magnitude_range": [-5, 10],
         "selected_agencies": [],
         "agency_colors": {},
@@ -252,7 +255,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
 
     $scope.station_settings = {
         "min_date": new Date("2000-01-01"),
-        "max_date": new Date(),
+        "max_date": currentDate,
         "grey_out_inactive_stations": true
     };
 
