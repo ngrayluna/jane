@@ -15,15 +15,17 @@ module.constant(
 
 // Colors for the different event agencies. From the color brewer website.
 module.constant('event_agency_colors', [
-    'rgba(0, 0, 255, 0.7)',
-    'rgba(152, 78, 163, 0.7)',
-    'rgba(228, 26, 28, 0.7)',
-    'rgba(255, 127, 0, 0.7)',
-    'rgba(55, 126, 184, 0.7)',
-    'rgba(255, 255, 51, 0.7)']);
+    'rgba(255, 0, 0, 0.5)',
+    'rgba(0, 0, 255, 0.5)',
+    'rgba(152, 78, 163, 0.5)',
+    'rgba(228, 26, 28, 0.5)',
+    'rgba(255, 127, 0, 0.5)',
+    'rgba(55, 126, 184, 0.5)',
+    'rgba(255, 255, 51, 0.5)']);
 
 
 module.constant('station_colors', [
+    'rgba(0, 0, 255, 1.0)',
     '#ff7f00',
     '#1f78b4',
     '#a6cee3',
@@ -203,9 +205,9 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     })
 
     $scope.center = {
-        latitude: 48.05,
-        longitude: 11.63,
-        zoom: 11
+        latitude: 48.6,
+        longitude: 11.5,
+        zoom: 8
     };
 
     $scope.rotation = 0;
@@ -236,7 +238,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     $scope.event_layer_show_points = true;
 
     $scope.event_settings = {
-        "min_date": new Date("1900-01-01"),
+        "min_date": new Date("2000-01-01"),
         "max_date": new Date(),
         "magnitude_range": [-5, 10],
         "selected_agencies": [],
@@ -249,7 +251,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     };
 
     $scope.station_settings = {
-        "min_date": new Date("1990-01-01"),
+        "min_date": new Date("2000-01-01"),
         "max_date": new Date(),
         "grey_out_inactive_stations": true
     };
@@ -296,7 +298,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
         $scope.event_settings.selected_authors.push("UNKNOWN");
         $scope.event_settings.available_authors.push({
             value: "UNKNOWN",
-            label: "<i>No given author</i>"
+            label: "<i>unbekannt</i>"
         });
 
         $scope.update_event_source(
