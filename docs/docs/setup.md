@@ -34,6 +34,7 @@ with the following Python modules
 * `defusedxml`
 * `gdal`  On Windows: http://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
 * `geojson`
+* `geopy`
 * `django-cors-headers`
 * `flake8`
 * `django-debug-toolbar`
@@ -50,7 +51,7 @@ used to setup a new dedicated and separate environment to run `Jane`:
 $ conda config --add channels obspy
 $ conda create -n jane python=3.4
 $ source activate jane
-(jane)$ conda install obspy=1.0 django==1.8 psycopg2 markdown flake8 gdal pyyaml
+(jane)$ conda install obspy=1.0 django==1.8 psycopg2 markdown flake8 gdal pyyaml geopy
 (jane)$ pip install https://github.com/krischer/django-plugins/archive/master.zip
 (jane)$ pip install jsonfield djangorestframework djangorestframework-gis defusedxml geojson django-cors-headers django-debug-toolbar django-debug-toolbar-template-timings djangorestframework-jsonp djangorestframework-xml djangorestframework-yaml
 ```
@@ -63,6 +64,7 @@ dependencies:
 - django
 - flake8
 - gdal
+- geopy
 - markdown
 - obspy
 - psycopg2
@@ -103,6 +105,7 @@ dependencies:
 - freetype=2.5.5=0
 - future=0.15.2=py34_0
 - gdal=2.0.0=py34_1
+- geopy=1.11.0=py34_0
 - geos=3.4.2=0
 - get_terminal_size=1.0.0=py34_0
 - hdf4=4.2.11=0
