@@ -189,7 +189,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <label>
                     <small>
                         Status
@@ -200,6 +200,23 @@
                 <toggle-switch model="event_settings.show_public_and_private"
                                class="switch-mini switch-default"
                                on-label="alle" off-label="öffentliche"
+                               style="width:100%">
+                </toggle-switch>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label>
+                    <small>
+                        Show uncertainties?
+                    </small>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <toggle-switch model="event_settings.show_uncertainties"
+                               class="switch-mini switch-default"
+                               on-label="on" off-label="off"
                                style="width:100%">
                 </toggle-switch>
             </div>
