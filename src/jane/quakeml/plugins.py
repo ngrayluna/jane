@@ -199,7 +199,7 @@ for site_ in sites:
         local[permission_plugin_name] = \
             _site_magnitude_threshold_retrieve_permission(
                 permission_plugin_name, magnitude_threshold=mag_threshold,
-                site="Geothermie_{}".format(site_))
+                site=site_)
 
 
 class QuakeMLIndexerPlugin(IndexerPluginPoint):
