@@ -28,6 +28,21 @@ module.constant('event_agency_colors', [
     'rgba(202, 178, 214, 0.5)',
     'rgba(255, 255, 153, 0.5)']);
 
+// Colors for the different event sites. From the color brewer website.
+module.constant('event_site_colors', [
+    'rgba(141, 211, 199, 0.5)',
+    'rgba(190, 186, 218, 0.5)',
+    'rgba(251, 128, 114, 0.5)',
+    'rgba(128, 177, 211, 0.5)',
+    'rgba(253, 180, 98, 0.5)',
+    'rgba(179, 222, 105, 0.5)',
+    'rgba(252, 205, 229, 0.5)',
+    'rgba(217, 217, 217, 0.5)',
+    'rgba(188, 128, 189, 0.5)',
+    'rgba(204, 235, 197, 0.5)',
+    'rgba(255, 255, 179, 0.5)',
+    'rgba(255, 237, 111, 0.5)']);
+
 
 module.constant('station_colors', [
     'rgba(0, 0, 255, 1.0)',
@@ -207,7 +222,8 @@ module.factory('stations', function($http, $log, jane_server) {
 
 
 module.controller("BayNetController", function($scope, $log, stations, station_colors,
-                                               events, event_agency_colors, current_user) {
+                                               events, event_agency_colors,
+                                               event_site_colors, current_user) {
 
     current_user.success(function (data) {
         $scope.current_user = data.username;
@@ -258,6 +274,11 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
         "agency_icons": [],
         "available_authors": [],
         "selected_authors": [],
+        "available_sites": [],
+        "selected_sites": [],
+        "site_colors": {},
+        "site_icons": [],
+        "color_coding_switch": true,
         "show_public_and_private": true,
         "show_automatic_and_manual": true,
         "show_uncertainties": true,
@@ -296,6 +317,30 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
 
         $scope.event_settings.selected_agencies = [agencies[0]];
 
+        // Get all unique sites.
+        var sites = _.uniq(_.map(f, function(i) {
+            return i.properties.site;
+        }));
+        sites.sort();
+
+        // Distribute colors to the sites..
+        $scope.event_settings.site_colors = {};
+        for (var i = 0; i < sites.length; i++) {
+            $scope.event_settings.site_colors[sites[i]] =
+                event_site_colors[i % event_site_colors.length];
+        }
+
+        // Set the available choices.
+        $scope.event_settings.site_icons = _.map(sites, function(i) {
+            return {
+                value: i,
+                label: '<i class="fa fa-circle" style="color:' +
+                    $scope.event_settings.site_colors[i] +
+                    '"></i> ' + i}
+        });
+
+        $scope.event_settings.selected_sites = sites;
+
         // Get all authors.
         $scope.event_settings.selected_authors = _.uniq(_.map(f, function(i) {
             return i.properties.author;
@@ -312,6 +357,14 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
         $scope.event_settings.available_authors.push({
             value: "UNKNOWN",
             label: "<i>unbekannt</i>"
+        });
+
+
+        $scope.event_settings.available_sites = _.map($scope.event_settings.selected_sites, function(i){
+            return {
+                value: i,
+                label: '<i class="fa fa-user"></i> ' + i
+            }
         });
 
         $scope.update_event_source(
