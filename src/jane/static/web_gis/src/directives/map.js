@@ -235,7 +235,10 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
 
                     var style = styleCache[tag];
                     if (!style) {
-                        c = event_settings.agency_colors[feature.get('agency')];
+                        if (event_settings.color_coding_switch) {
+                            c = event_settings.site_colors[feature.get('site')];}
+                        else {
+                            c = event_settings.agency_colors[feature.get('agency')];}
                         style = [new ol.style.Style({
                             image: new ol.style.Circle({
                                 radius: radius,
@@ -336,7 +339,9 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         if ((i.properties.origin_time < event_settings.min_date) ||
                             (i.properties.origin_time > event_settings.max_date) ||
                             (i.properties.magnitude < event_settings.magnitude_range[0]) ||
-                            (i.properties.magnitude > event_settings.magnitude_range[1]) || !_.contains(event_settings.selected_agencies, i.properties.agency)) {
+                            (i.properties.magnitude > event_settings.magnitude_range[1]) ||
+                            !_.contains(event_settings.selected_agencies, i.properties.agency) ||
+                            !_.contains(event_settings.selected_sites, i.properties.site) ) {
                             return false;
                         }
 
