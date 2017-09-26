@@ -109,12 +109,13 @@ def _site_magnitude_threshold_retrieve_permission(
         permission_name = 'Can See Magnitude <{} Events{}'.format(
             magnitude_threshold, site and " At site='{}'".format(site) or "")
 
-        def filter_queryset_user_has_permission(self, queryset, model_type):
+        def filter_queryset_user_has_permission(self, queryset, model_type,
+                                                user):
             # If the user has the permission: don't restrict queryset.
             return queryset
 
         def filter_queryset_user_does_not_have_permission(self, queryset,
-                                                          model_type):
+                                                          model_type, user):
             # model_type can be document or document index.
             if model_type in ["document", "index"]:
                 # Modify the queryset to only contain indices that are above
