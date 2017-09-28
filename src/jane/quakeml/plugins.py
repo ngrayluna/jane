@@ -145,15 +145,25 @@ def _site_magnitude_threshold_retrieve_permission(
 
 # Retrieve permissions for small events, if users don't have these permissions
 # small events are not accessible to them
-MagnitudeLessThan05RetrievePermissionPlugin = \
+MagnitudeLessThanZeroRetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
-        "MagnitudeLessThan05RetrievePermissionPlugin", magnitude_threshold=0.5)
-MagnitudeLessThan1RetrievePermissionPlugin = \
+        "MagnitudeLessThanZeroRetrievePermissionPlugin",
+        magnitude_threshold=-0.05)
+MagnitudeLessThanZeroPointFiveRetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
-        "MagnitudeLessThan1RetrievePermissionPlugin", magnitude_threshold=0.95)
-MagnitudeLessThan2RetrievePermissionPlugin = \
+        "MagnitudeLessThanZeroPointFiveRetrievePermissionPlugin",
+        magnitude_threshold=0.45)
+MagnitudeLessThanOneRetrievePermissionPlugin = \
     _site_magnitude_threshold_retrieve_permission(
-        "MagnitudeLessThan2RetrievePermissionPlugin", magnitude_threshold=1.95)
+        "MagnitudeLessThanOneRetrievePermissionPlugin",
+        magnitude_threshold=0.95)
+MagnitudeLessThanOnePointFiveRetrievePermissionPlugin = \
+    _site_magnitude_threshold_retrieve_permission(
+        "MagnitudeLessThanOnePointFiveRetrievePermissionPlugin",
+        magnitude_threshold=1.45)
+MagnitudeLessThanTwoRetrievePermissionPlugin = \
+    _site_magnitude_threshold_retrieve_permission(
+        "MagnitudeLessThanTwoRetrievePermissionPlugin", magnitude_threshold=1.95)
 
 # Retrieve permissions for small events attributed to a specific site (e.g. a
 # specific deep geothermal project), if users don't have these permissions
@@ -190,7 +200,9 @@ sites = [
 # add all site/magnitude-threshold permission plugins
 local = locals()
 for site_ in sites:
-    for mag_threshold, mag_string in zip((0.5, 0.95, 1.95), ('05', '1', '2')):
+    for mag_threshold, mag_string in zip(
+            (-0.05, 0.45, 0.95, 1.45, 1.95),
+            ('Zero', 'ZeroPointFive', 'One', 'OnePointFive', 'Two')):
         permission_plugin_name = '{}LessThan{}RetrievePermissionPlugin'.format(
             site_, mag_string)
         local[permission_plugin_name] = \
