@@ -78,8 +78,7 @@ class DocumentManager(models.Manager):
         queryset = queryset.defer('data')
         return queryset
 
-    def get_filtered_queryset(self, document_type, queryset=None, negate=False,
-                              **kwargs):
+    def get_filtered_queryset(self, document_type, queryset=None, **kwargs):
         """
         Returns a queryset filtered on the items in the JSON index field.
 
@@ -104,8 +103,7 @@ class DocumentManager(models.Manager):
         # XXX gets changed while evaluating the request (e.g. table row gets
         # XXX deleted during request == ids of rows change??)
         indices_queryset = DocumentIndex.objects.get_filtered_queryset(
-            document_type=document_type, queryset=None, negate=negate,
-            **kwargs)
+            document_type=document_type, queryset=None, **kwargs)
 
         # XXX TODO this does not cover the case of multiple indices for one
         # XXX TODO single document yet!
