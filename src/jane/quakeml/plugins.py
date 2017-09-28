@@ -118,25 +118,22 @@ def _site_magnitude_threshold_retrieve_permission(
                                                           model_type, user):
             # model_type can be document or document index.
             if model_type in ["document", "index"]:
+                # filter out any events without a magnitude given
+                #queryset = queryset.exclude(json__magnitude__isnull=True)
                 # Modify the queryset to only contain indices that are above
                 # given magnitude threshold.
-                # XXX check what happens with events that have null for
-                # XXX magnitude..
-                kwargs = {}
-                # if no site is specified, just do a normal filter by magnitude
+                # if no site is specified, just exclude any events below that
                 # threshold
                 if site is None:
-                    kwargs["min_magnitude"] = magnitude_threshold
-                    negate = False
-                # if site is specified, we need to search for events matching
-                # both criteria and then invert the resulting queryset
+                    queryset = queryset.exclude(
+                        json__magnitude__lt=magnitude_threshold)
+                # if site is specified, we need to search for events below the
+                # given magnitude threshold that are associated to that site,
+                # and then exclude them from the queryset
                 else:
-                    kwargs['site'] = site
-                    kwargs["max_magnitude"] = magnitude_threshold - 0.01
-                    negate = True
-                queryset = queryset.model.objects.get_filtered_queryset(
-                    document_type="quakeml", queryset=queryset, negate=negate,
-                    **kwargs)
+                    queryset = queryset.exclude(
+                        json__site=site,
+                        json__magnitude__lt=magnitude_threshold)
             else:
                 raise NotImplementedError()
             return queryset
