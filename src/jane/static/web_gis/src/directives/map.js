@@ -104,6 +104,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 })
             };
 
+
             $scope.change_base_layer = function(layer_name) {
                 $scope.current_base_layer = layer_name;
                 _.forEach($scope.baseLayers, function(value, key) {
@@ -132,29 +133,29 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
 
 
             // Layer showing the outline of bavaria.
-            var bavaria = new ol.layer.Vector({
-                visible: $scope.show_bavaria_outline,
-                source: new ol.source.Vector({
-                    url: 'bayern_topo.json',
-                    format: new ol.format.TopoJSON()
-                }),
-                style: function() {
-                    return [new ol.style.Style({
-                        fill: new ol.style.Fill({
-                            color: 'rgba(255, 255, 255, 0.3)'
-                        }),
-                        stroke: new ol.style.Stroke({
-                            color: '#319FD3',
-                            width: 2
-                        })
-                    })];
-                }
-            });
-            map.addLayer(bavaria);
+            // var bavaria = new ol.layer.Vector({
+            //     visible: $scope.show_bavaria_outline,
+            //     source: new ol.source.Vector({
+            //         url: 'bayern_topo.json',
+            //         format: new ol.format.TopoJSON()
+            //     }),
+            //     style: function() {
+            //         return [new ol.style.Style({
+            //             fill: new ol.style.Fill({
+            //                 color: 'rgba(255, 255, 255, 0.3)'
+            //             }),
+            //             stroke: new ol.style.Stroke({
+            //                 color: '#319FD3',
+            //                 width: 2
+            //             })
+            //         })];
+            //     }
+            // });
+            // map.addLayer(bavaria);
 
-            $scope.$watch("show_bavaria_outline", function(new_value) {
-                bavaria.setVisible(new_value);
-            });
+            // $scope.$watch("show_bavaria_outline", function(new_value) {
+            //     bavaria.setVisible(new_value);
+            // });
 
             // Watch opacity and rotation value changes.
             $scope.$watch("base_layer_opacity", function(new_value) {
@@ -177,7 +178,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
             var get_style_function_stations = function(colors) {
                 var textStroke = new ol.style.Stroke({
                     color: '#444444',
-                    width: 1
+                    width: 2.5
                 });
                 return function(feature, resolution) {
                     var net = feature.get('network');
@@ -190,7 +191,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         });
                     } else {
                         var textFill = new ol.style.Fill({
-                            color: colors[net]
+                            color: "#ff000d"
                         });
                     }
 
@@ -211,6 +212,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 var styleFunction = function(feature, resolution) {
 
                     var stroke_color = "black";
+                    var color;
                     var stroke_width = 1.0;
                     var magnitude;
                     var radius;
@@ -227,8 +229,12 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                     else  {
                         // Scale events from -3 to 8 from 1 to 30.0 pixel.
                         // Smallest possible value is 0.5.
+                        // magnitude = parseFloat(feature.get('magnitude'));
+                        // radius = Math.max(((magnitude + 3.0) / 11) * 29.0 + 1, 0.5);
+                        // Scale events from 3 to 10 from 1 to 10.0 pixel.
+                        // Smallest possible value is 0.5.
                         magnitude = parseFloat(feature.get('magnitude'));
-                        radius = Math.max(((magnitude + 3.0) / 11) * 29.0 + 1, 0.5);
+                        radius = Math.max(((magnitude - 3.0) / 7) * 9.0 + 0.5, 0.5);
                         tag = radius;
                     }
 
@@ -387,7 +393,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 var view = map.getView();
 
                 var pan = ol.animation.pan({
-                    duration: 2000,
+                    duration: 0,
                     source: view.getCenter()
                 });
                 map.beforeRender(pan);
@@ -467,24 +473,24 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         }
                         tooltip_title += 'Event type: ' + ev_type;
 
-                        var author = feature.get("author");
-                        if (author == null) {
-                            author = "not specified"
-                        }
+                        // var author = feature.get("author");
+                        // if (author == null) {
+                        //     author = "not specified"
+                        // }
 
-                        var evaluation_mode = feature.get("evaluation_mode");
-                        if (evaluation_mode == null) {
-                            evaluation_mode = "not specified"
-                        }
+                        // var evaluation_mode = feature.get("evaluation_mode");
+                        // if (evaluation_mode == null) {
+                        //     evaluation_mode = "not specified"
+                        // }
 
-                        var public = feature.get("public");
-                        if (public == null) {
-                            public = "not specified"
-                        }
+                        // var public = feature.get("public");
+                        // if (public == null) {
+                        //     public = "not specified"
+                        // }
 
-                        tooltip_title += "\nAgency: " + feature.get("agency") +
-                            " | Author: " + author + " | Evaluation mode: " + evaluation_mode +
-                            " | Public: " + public;
+                        // tooltip_title += "\nAgency: " + feature.get("agency") +
+                        //     " | Author: " + author + " | Evaluation mode: " + evaluation_mode +
+                        //     " | Public: " + public;
 
                         if (feature.get('magnitude')) {
 
@@ -509,9 +515,10 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                     else {
                         tooltip_title = 'Station ' + feature.get('network') +
                             '.' + feature.get('station') +
-                            '\n' + feature.get('station_name') + ' ,' + feature.get('network_name') +
-                            '\n' + feature.get('channels').length +
-                            ' channels across timespans';
+                            '\n' + feature.get('station_name') + ', ' + feature.get('network_name') +
+                            '\n' 
+                            // + feature.get('channels').length +
+                            // ' channels across timespans';
                     }
 
                     event_info.tooltip('hide')
@@ -538,6 +545,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 var feature = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
                     return feature;
                 });
+
                 if (feature) {
                     if (detectFeatureType(feature) == "event") {
                         var modal = $modal({

@@ -34,6 +34,8 @@ module.constant('station_colors', [
     '#fdbf6f']);
 
 
+
+
 module.factory('current_user', function ($http) {
     return $http.get('/rest/current_user');
 });
@@ -203,15 +205,15 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     })
 
     $scope.center = {
-        latitude: 48.505,
-        longitude: 12.09,
-        zoom: 5
+		latitude: 20,
+        longitude: 0,
+        zoom: 1.75
     };
 
     $scope.rotation = 0;
     $scope.base_layer_opacity = 100.0;
 
-    $scope.show_bavaria_outline = false;
+    // $scope.show_bavaria_outline = false;
 
     // XXX: This has to be in sync with the base layer that has the default
     // visibility.
@@ -236,9 +238,9 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     $scope.event_layer_show_points = true;
 
     $scope.event_settings = {
-        "min_date": new Date("1900-01-01"),
+        "min_date": new Date("2007-07-18"),
         "max_date": new Date(),
-        "magnitude_range": [-5, 10],
+        "magnitude_range": [3, 10],
         "selected_agencies": [],
         "agency_colors": {},
         "agency_icons": [],
@@ -249,7 +251,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     };
 
     $scope.station_settings = {
-        "min_date": new Date("1990-01-01"),
+        "min_date": new Date("2007-07-18"),
         "max_date": new Date(),
         "grey_out_inactive_stations": true
     };

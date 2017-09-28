@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Jane Developers">
+    <meta name="author" content=c"Jane Developers">
 
-    <title>Jane WebGIS</title>
+    <title>Rotation Event Database</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
 
     <!--Components CSS-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"
@@ -72,7 +74,7 @@
     </div>
 
     <div class="container-fluid">
-        <h4>Jane WebGIS</h4>
+        <h4>Rotational Seismology Event Database</h4>
     </div>
 
 
@@ -96,12 +98,7 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <i class="small">Shift + Drag to download multiple Events</i>
-            </div>
-        </div>
-        <div class="row">
+        <div class="row" style="padding-top:10px">
             <div class="col-md-4">
                 <label>
                     <i class="fa fa-calendar"></i>
@@ -111,20 +108,20 @@
             <div class="col-md-4 event-timepicker">
                 <input type="text" class="form-control"
                        ng-model="event_settings.min_date"
-                       data-max-date="{{ untilDate }}" placeholder="Von"
-                       data-date-format="dd.MM.yyyy"
+                       data-max-date="{{ untilDate }}" placeholder="yyyy-mm-dd"
+                       data-date-format="yyyy-MM-dd"
                        bs-datepicker>
             </div>
             <div class="col-md-4 event-timepicker">
                 <input type="text" class="form-control"
                        ng-model="event_settings.max_date"
-                       data-min-date="{{ fromDate }}" placeholder="Bis"
-                       data-date-format="dd.MM.yyyy"
+                       data-min-date="{{ fromDate }}" placeholder="yyyy-mm-dd"
+                       data-date-format="yyyy-MM-dd"
                        bs-datepicker>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="padding-top:10px">
             <div class="col-md-4">
                 <label>
                     <i class="fa fa-arrows-h"></i>
@@ -137,8 +134,8 @@
             <div class="col-md-6">
                 <slider
                         ng-model="event_settings.magnitude_range"
-                        min="-5"
-                        step="0.5"
+                        min="3"
+                        step="0.1"
                         precision="1"
                         max="10"
                         data-slider-tooltip="hide"
@@ -148,91 +145,46 @@
             <div class="col-md-1 magnitude-label" style="text-align: left">
                 {{ event_settings.magnitude_range[1]}}
             </div>
-        </div>
 
-        <div class="row" style="padding-top:10px">
-            <div class="col-md-6">
-                <label>
-                    <i class="fa fa-institution"></i>
-                    <small>Agencies</small>
-                </label>
-            </div>
-        </div>
-        <div class="row" style="padding-bottom: 10px">
-            <div class="col-md-10 col-md-offset-1">
-                <button type="button" class="btn btn-default btn-xs"
-                        ng-model="event_settings.selected_agencies"
-                        data-html="1" data-multiple="1"
-                        data-animation="am-flip-x"
-                        ng-options="icon.value as icon.label for icon in event_settings.agency_icons"
-                        bs-select>
-                    Action <span class="caret"></span>
-                </button>
-            </div>
-        </div>
-
-        <div class="row" style="padding-top:10px">
-            <div class="col-md-6">
-                <label>
-                    <i class="fa fa-users"></i>
-                    <small>Authors</small>
-                </label>
-            </div>
-        </div>
-        <div class="row" style="padding-bottom: 10px">
-            <div class="col-md-10 col-md-offset-1">
-                <button type="button" class="btn btn-default btn-xs"
-                        ng-model="event_settings.selected_authors"
-                        data-html="1" data-multiple="1"
-                        data-animation="am-flip-x"
-                        ng-options="icon.value as icon.label for icon in event_settings.available_authors"
-                        bs-select>
-                    bs-select>
-                    Action <span class="caret"></span>
-                </button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-2">
-                <label>
+            <div class="row">
+                <div class="col-md-12" style="padding-top:5px">
                     <small>
-                        Status
+                        <center>Total Events in Catalog:
+                        {{ geojson_events.features.length }}
+                        </center>
                     </small>
-                </label>
+                </div>
             </div>
+
+        </div>
+
+        <!-- trying to add correlation range here -->
+        <!-- <div class="row" style="padding-top:10px">
             <div class="col-md-4">
-                <toggle-switch model="event_settings.show_public_and_private"
-                               class="switch-mini switch-default"
-                               on-label="all" off-label="public"
-                               style="width:100%">
-                </toggle-switch>
-            </div>
-            <div class="col-md-2">
                 <label>
-                    <small>
-                        Methode
-                    </small>
+                    <i class="fa fa-database"></i>
+                    <small>Correlation</small>
                 </label>
             </div>
-            <div class="col-md-4">
-                <toggle-switch model="event_settings.show_automatic_and_manual"
-                               class="switch-mini switch-default"
-                               on-label="all" off-label="manual"
-                               style="width:100%">
-                </toggle-switch>
+            <div class="col-md-1" style="text-align: right">
+                {{ event_settings.correlation_range[0]}}
+            </div>
+            <div class="col-md-6">
+                <slider
+                        ng-model="event_settings.correlation_range"
+                        min="0"
+                        step="0.1"
+                        precision="1"
+                        max="1"
+                        data-slider-tooltip="hide"
+                        value="{{ event_settings.correlation_range }}">
+                </slider>
+            </div>
+            <div class="col-md-1" style="text-align: left">
+                {{ event_settings.correlation_range[1]}}
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <small>Total Available Events:
-                    {{ geojson_events.features.length }}
-                </small>
-            </div>
-        </div>
-
-
+ -->
     </div>
 
     <div class="sidebar-header">
@@ -241,44 +193,54 @@
                        style="position:absolute; margin-top:5px; margin-left: 5px">
         </toggle-switch>
         <span class="input-group-addon">
-            <i class="fa fa-th"></i> Stations
+            <i class="fa fa-th"></i> Stations (under construction)
         </span>
     </div>
 
-
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top:10px">
         <div class="row">
             <div class="col-md-4">
                 <label>
-                    <i class="fa fa-calendar"></i>
-                    <small>Time Range</small>
+                    <i class="fa fa-compass"></i>
+                    <small>Station</small>
                 </label>
             </div>
-            <div class="col-md-4 event-timepicker">
-                <input type="text" class="form-control"
-                       ng-model="station_settings.min_date"
-                       data-max-date="{{ untilDate }}" placeholder="Von"
-                       data-date-format="dd.MM.yyyy"
-                       bs-datepicker>
-            </div>
-            <div class="col-md-4 event-timepicker">
-                <input type="text" class="form-control"
-                       ng-model="station_settings.max_date"
-                       data-min-date="{{ fromDate }}" placeholder="Bis"
-                       data-date-format="dd.MM.yyyy"
-                       bs-datepicker>
+            <div class="col-md-8">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-xs dropdown-toggle"
+                            style="width:100%"
+                            type="button"
+                            data-animation="am-flip-x"
+                            data-toggle="dropdown">
+                        BW.RLAS
+                        <span class="caret"></span>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">HTML</a></li>
+                            <li><a href="#">CSS</a></li>
+                            <li><a href="#">JavaScript</a></li>
+                        </ul>
+                    </button>
+                </div>
             </div>
         </div>
 
+        
         <div class="row" style="padding-top: 10px">
-            <div class="col-md-2" style="white-space:nowrap; overflow:hidden"
+            <div class="col-md-6">
+                <label>
+                    <i class="fa fa-circle-o"></i> 
+                    <small>Available</small>
+                </label>
+            </div>
+            <div class="col-md-6" style="white-space:nowrap; overflow:hidden"
                  ng-repeat="(network, color) in station_colors">
-                <span style="color:{{ color }}">▼</span>
+                <!-- <span style="color:{{ color }}">▼</span> -->
+                <span style="color:#ff000d">▼</span>
                 <small><label>{{ network }}</label></small>
             </div>
         </div>
 
-        <div class="row">
+     <!--    <div class="row">
             <div class="col-md-8">
                 <label>
                     <small>
@@ -293,7 +255,7 @@
                         style="width:100%">
                 </toggle-switch>
             </div>
-        </div>
+        </div> -->
 
 
     </div>
@@ -301,14 +263,14 @@
 
     <div class="sidebar-header">
         <span class="input-group-addon">
-            <i class="fa fa-th"></i> Map Settings
+            <i class="fa fa-map-marker"></i> Map Settings
         </span>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top:10px">
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-4" >
                 <small>Base Layer</small>
             </div>
 
@@ -326,7 +288,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="padding-top: 10px">
 
             <div class="col-md-4">
                 <small>Rotation: {{ rotation }}°</small>
@@ -345,7 +307,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top: 10px">
         <div class="row">
 
             <div class="col-md-4">
@@ -363,7 +325,7 @@
                 </slider>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-4">
                 <small>Bavaria Overlay</small>
             </div>
@@ -373,27 +335,92 @@
                                on-label="on" off-label="off">
                 </toggle-switch>
             </div>
-        </div>
-        <div class="row" style="padding-top: 5px">
+        </div> -->
+  <!--       <div class="row" style="padding-top: 10cd px">
             <div class="col-md-3">
                 <small>Zoom to</small>
             </div>
             <div class="col-md-9">
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(12, 49, 7)">Bayern</a>
+                   ng-click="panTo(0, 0, 1.75)">Default</a>
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(12.9, 47.7, 11)">Hochstaufen</a>
+                   ng-click="panTo(6, 52, 4)">Europe</a>
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(11.63, 48.05, 11)">Unterhaching</a>
+                   ng-click="panTo(-75, 20, 2.5)">Americas</a>
                 <a type="button"
                    class="btn btn-default btn-xs"
-                   ng-click="panTo(12.1, 50.0, 10)">Marktredwitz</a>
+                   ng-click="panTo(127, 26, 2.5)">Asia</a>
+                <a type="button"
+                   class="btn btn-default btn-xs"
+                   ng-click="panTo(-165, 20, 2)">Pacific</a>
+               <a type="button"
+                   class="btn btn-default btn-xs"
+                   ng-click="panTo(-20, 20, 3)">Atlantic</a>
+               
             </div>
         </div>
+    </div> -->
+
+        <div class="container-fluid">
+            <center>
+                <div class="col-md-12">
+                    <b class="small">Zoom to Region</b>
+                </div>
+            </center>
+        </div>
+            <center>
+                <div class="col-md-12">
+                    <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(0, 20, 1.75)">World</a>
+                    <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(6, 52, 4)">Europe</a>
+                    <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(-75, 20, 2.5)">Americas</a>
+                    <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(127, 26, 2.5)">Asia</a>
+                    <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(-165, 20, 2)">Pacific</a>
+                   <a type="button"
+                       class="btn btn-default btn-xs"
+                       ng-click="panTo(-20, 20, 3)">Atlantic</a>
+                </div>
+            </center>
     </div>
+
+    <div class="sidebar-header" style="padding-top: 10px">
+        <span class="input-group-addon">
+            <i class="fa fa-info"></i> Information
+        </span>
+    </div>
+
+    <div class="container-fluid" >
+        <div class="col-md-12">
+            <center>
+                <label>
+                    <small> 
+                        <a href="http://srl.geoscienceworld.org/content/88/3/935.full" target="_blank">Cite This Database</a>  
+                    </small>
+                </label>
+            </center>
+        </div>
+
+        <div class="row">
+            <center>
+                <div class="col-md-12">
+                    <i class="small">Shift + Drag on map to download multiple events</i>
+                </div>
+            </center>
+        </div>
+    </div>
+
 
 </div>
 
