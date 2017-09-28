@@ -99,8 +99,6 @@ def _site_magnitude_threshold_retrieve_permission(
         threshold are filtered out (optionally only for a specific site).
         """
         name = 'quakeml'
-        title = 'Can See Magnitude <{} Events {}Permission'.format(
-            magnitude_threshold, site and "At site='{}' ".format(site) or "")
 
         # Permission codename and name according to Django's nomenclature.
         # XXX no idea if dots are allowed in codename, so replace them
@@ -108,6 +106,7 @@ def _site_magnitude_threshold_retrieve_permission(
             magnitude_threshold, site or "any").replace(".", "_")
         permission_name = 'Can See Magnitude <{} Events{}'.format(
             magnitude_threshold, site and " At site='{}'".format(site) or "")
+        title = permission_name + ' Permission'
 
         def filter_queryset_user_has_permission(self, queryset, model_type,
                                                 user):
