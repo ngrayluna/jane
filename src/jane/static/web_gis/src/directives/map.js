@@ -466,7 +466,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
 
                 if (feature) {
                     if (detectFeatureType(feature) == "event") {
-                        var tooltip_title = "Event: " + feature.get("quakeml_id") + "\n";
+                        var tooltip_title = feature.get("title_tag") + "\n";
                         var ev_type = feature.get('event_type');
                         if (ev_type == null) {
                             ev_type = "not defined";
@@ -549,7 +549,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 if (feature) {
                     if (detectFeatureType(feature) == "event") {
                         var modal = $modal({
-                            title: feature.get("quakeml_id"),
+                            title: feature.get("title_tag"),
                             template: "./templates/event_modal.tpl.html",
                             persist: false,
                             show: true});

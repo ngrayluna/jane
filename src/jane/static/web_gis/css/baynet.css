@@ -64,6 +64,12 @@ html, body {
     padding: 2px;
 }
 
+.correlation-label {
+    font-size: small;
+    font-weight: 900;
+    padding: 2px;
+}
+
 body .modal-dialog {
     /* new custom width */
     width: 90%;

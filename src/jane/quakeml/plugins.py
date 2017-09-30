@@ -102,6 +102,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
     # on. For this to work it has to know the type for each key. Possible
     # values for the type are "str", "int", "float", "bool", and "UTCDateTime".
     meta = {
+        "title_tag": "str",
         "quakeml_id": "str",
         "latitude": "float",
         "longitude": "float",
@@ -116,6 +117,9 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
         "event_type": "str",
         "has_focal_mechanism": "bool",
         "has_moment_tensor": "bool",
+        "peak_correlation_coefficient": "float",
+        "theoretical_backazimuth": "float",
+        "epicentral_distance_km": "float",
     }
 
     def index(self, document):
@@ -150,10 +154,16 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 if any(mt for mt in event.focal_mechanisms):
                     has_moment_tensor = True
 
-            # Parse attributes in the baynet namespace.
-            # The public attribute defaults to True, it can only be set to
-            # False by utilizing the baynet namespace as of now.
+            # Parse attributes in the extra and event descriptions
+            # namespaces and populate indices
             extra = event.get("extra", {})
+            dscrpt = event.get("event_descriptions", {})
+
+            pcc = float(extra['peak_correlation_coefficient']['value'])
+            tbaz = float(extra['theoretical_backazimuth']['value'])
+            dist = float(extra['epicentral_distance']['value'])
+            title_tag = '{} / {}'.format(dscrpt[0].text,dscrpt[1].text)
+
             if "public" in extra:
                 public = extra["public"]["value"]
                 if public.lower() in ["false", "f"]:
@@ -170,6 +180,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 evaluation_mode = None
 
             indices.append({
+                "title_tag": title_tag,
                 "quakeml_id": str(event.resource_id),
                 "latitude": org.latitude if org else None,
                 "longitude": org.longitude if org else None,
@@ -183,9 +194,12 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 event.creation_info and event.creation_info.author or None,
                 "public": public,
                 "evaluation_mode": evaluation_mode,
-                "event_type": event.event_type,
+                "event_type": event.event_type.capitalize(),
                 "has_focal_mechanism": has_focal_mechanism,
                 "has_moment_tensor": has_moment_tensor,
+                "peak_correlation_coefficient": pcc,
+                "theoretical_backazimuth": tbaz,
+                "epicentral_distance_km": dist,
                 # The special key geometry can be used to store geographic
                 # information about the indexes geometry. Useful for very
                 # fast queries using PostGIS.
