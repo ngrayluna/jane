@@ -36,17 +36,11 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
             // The base layers are treated as a group. Only one can be active
             // at any given time and they share their opacity setting.
             $scope.baseLayers = {
-                "OpenTopoMap": new ol.layer.Tile({
-                    visible: true,
-                    source: new ol.source.OSM({
-                        url: '//{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
-                        crossOrigin: null
-                    })
-                }),
                 "Stamen Toner-Lite": new ol.layer.Tile({
-                    visible: false,
+                    visible: true,
                     source: new ol.source.Stamen({layer: 'toner-lite'})
                 }),
+               
                 "Stamen Toner": new ol.layer.Tile({
                     visible: false,
                     source: new ol.source.Stamen({layer: 'toner'})
@@ -55,13 +49,19 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                     visible: false,
                     source: new ol.source.Stamen({layer: 'watercolor'})
                 }),
-                "MapQuest (Street)": new ol.layer.Tile({
+                // "MapQuest (Street)": new ol.layer.Tile({
+                //     visible: false,
+                //     source: new ol.source.MapQuest({layer: 'osm'})
+                // }),
+                // "MapQuest (Satellite)": new ol.layer.Tile({
+                //     visible: false,
+                //     source: new ol.source.MapQuest({layer: 'sat'})
+                // }),
+                "OpenTopoMap": new ol.layer.Tile({
                     visible: false,
-                    source: new ol.source.MapQuest({layer: 'osm'})
-                }),
-                "MapQuest (Satellite)": new ol.layer.Tile({
-                    visible: false,
-                    source: new ol.source.MapQuest({layer: 'sat'})
+                    source: new ol.source.OSM({
+                        url: '//{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png',
+                        crossOrigin: null})
                 }),
                 "Open Street Map": new ol.layer.Tile({
                     visible: false,
@@ -80,27 +80,26 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         url: '//4umaps.eu/{z}/{x}/{y}.png',
                         crossOrigin: null
                     })
-                }),
-                "Bing (Road)": new ol.layer.Tile({
-                    visible: false,
-                    source: new ol.source.BingMaps({
-                        key: bing_key,
-                        imagerySet: 'Road'
-                    })
-                }),
-                "Bing (Aerial)": new ol.layer.Tile({
-                    visible: false,
-                    source: new ol.source.BingMaps({
-                        key: bing_key,
-                        imagerySet: 'Aerial'
-                    })
-                }),
-                "Bing (Aerial with Labels)": new ol.layer.Tile({
-                    visible: false,
-                    source: new ol.source.BingMaps({
-                        key: bing_key,
-                        imagerySet: 'AerialWithLabels'
-                    })
+                // "Bing (Road)": new ol.layer.Tile({
+                //     visible: false,
+                //     source: new ol.source.BingMaps({
+                //         key: bing_key,
+                //         imagerySet: 'Road'
+                //     })
+                // }),
+                // "Bing (Aerial)": new ol.layer.Tile({
+                //     visible: false,
+                //     source: new ol.source.BingMaps({
+                //         key: bing_key,
+                //         imagerySet: 'Aerial'
+                //     })
+                // }),
+                // "Bing (Aerial with Labels)": new ol.layer.Tile({
+                //     visible: false,
+                //     source: new ol.source.BingMaps({
+                //         key: bing_key,
+                //         imagerySet: 'AerialWithLabels'
+                //     })
                 })
             };
 
@@ -191,7 +190,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         });
                     } else {
                         var textFill = new ol.style.Fill({
-                            color: "#ff000d"
+                            color: "#e50000"
                         });
                     }
 
@@ -217,35 +216,27 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                     var magnitude;
                     var radius;
                     var tag;
-
-                    // Events without a magnitude have a big red stroke
-                    // around them so they are very visible.
-                    if (feature.get('has_no_magnitude') === true) {
-                        stroke_color = "red";
-                        stroke_width = 3;
-                        radius = 11.545454545;
-                        tag = "undefined";
-                    }
-                    else  {
-                        // Scale events from -3 to 8 from 1 to 30.0 pixel.
-                        // Smallest possible value is 0.5.
-                        // magnitude = parseFloat(feature.get('magnitude'));
-                        // radius = Math.max(((magnitude + 3.0) / 11) * 29.0 + 1, 0.5);
-                        // Scale events from 3 to 10 from 1 to 10.0 pixel.
-                        // Smallest possible value is 0.5.
-                        magnitude = parseFloat(feature.get('magnitude'));
-                        radius = Math.max(((magnitude - 3.0) / 7) * 9.0 + 0.5, 0.5);
-                        tag = radius;
-                    }
+                    var depth;
+                 
+                    // Scale events from -3 to 8 from 1 to 30.0 pixel.
+                    // Smallest possible value is 0.5.
+                    // magnitude = parseFloat(feature.get('magnitude'));
+                    // radius = Math.max(((magnitude + 3.0) / 11) * 29.0 + 1, 0.5);
+                    // Scale events from 3 to 10 from 1 to 10.0 pixel.
+                    // Smallest possible value is 0.5.
+                    magnitude = parseFloat(feature.get('magnitude'));
+                    radius = Math.max(((magnitude - 3.0) / 7) * 9.0 + 0.5, 0.5);
+                    tag = radius;
+                    
 
                     var style = styleCache[tag];
                     if (!style) {
-                        c = colors[feature.get('agency')];
+                        // c = colors[feature.get('agency')];
                         style = [new ol.style.Style({
                             image: new ol.style.Circle({
                                 radius: radius,
                                 fill: new ol.style.Fill({
-                                    color: c
+                                    color: "#ffb732"
                                 }),
                                 stroke: new ol.style.Stroke({
                                     color: stroke_color,
@@ -319,7 +310,12 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         if ((i.properties.origin_time < event_settings.min_date) ||
                             (i.properties.origin_time > event_settings.max_date) ||
                             (i.properties.magnitude < event_settings.magnitude_range[0]) ||
-                            (i.properties.magnitude > event_settings.magnitude_range[1]) || !_.contains(event_settings.selected_agencies, i.properties.agency)) {
+                            (i.properties.magnitude > event_settings.magnitude_range[1]) || 
+                            (i.properties.peak_correlation_coefficient < event_settings.correlation_range[0]) ||
+                            (i.properties.peak_correlation_coefficient > event_settings.correlation_range[1]) ||
+                            (i.properties.depth_in_km < event_settings.depth_range[0]) ||
+                            (i.properties.depth_in_km > event_settings.depth_range[1]) ||
+                            !_.contains(event_settings.selected_agencies, i.properties.agency)) {
                             return false;
                         }
 
@@ -409,6 +405,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
             }));
 
             map.addControl(new ol.control.ZoomSlider());
+
 
 
             // a DragBox interaction used to select features by drawing boxes

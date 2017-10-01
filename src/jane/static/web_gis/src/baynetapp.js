@@ -14,8 +14,17 @@ module.constant(
     'Ak-dzM4wZjSqTlzveKz5u0d4IQ4bRzVI309GxmkgSVr1ewS6iPSrOvOKhA-CJlm3');
 
 // Colors for the different event agencies. From the color brewer website.
-module.constant('event_agency_colors', [
-    'rgba(0, 0, 255, 0.7)',
+// module.constant('event_agency_colors', [
+//     'rgba(0, 0, 255, 0.7)',
+//     'rgba(152, 78, 163, 0.7)',
+//     'rgba(228, 26, 28, 0.7)',
+//     'rgba(255, 127, 0, 0.7)',
+//     'rgba(55, 126, 184, 0.7)',
+//     'rgba(255, 255, 51, 0.7)']);
+
+// Color for events
+module.constant('event_colors', [
+    'rgba(255, 69, 0, 0.7)',
     'rgba(152, 78, 163, 0.7)',
     'rgba(228, 26, 28, 0.7)',
     'rgba(255, 127, 0, 0.7)',
@@ -32,8 +41,6 @@ module.constant('station_colors', [
     '#e31a1c',
     '#fb9a99',
     '#fdbf6f']);
-
-
 
 
 module.factory('current_user', function ($http) {
@@ -198,7 +205,7 @@ module.factory('stations', function($http, $log, jane_server) {
 
 
 module.controller("BayNetController", function($scope, $log, stations, station_colors,
-                                               events, event_agency_colors, current_user) {
+                                               events, event_colors, current_user) {
 
     current_user.success(function (data) {
         $scope.current_user = data.username;
@@ -217,7 +224,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
 
     // XXX: This has to be in sync with the base layer that has the default
     // visibility.
-    $scope.current_base_layer = "OpenTopoMap";
+    $scope.current_base_layer = "Stamen Toner-Lite";
     // The map directive will fill this with a list of available base layers.
     $scope.base_layer_names_dropdown = [];
 
@@ -242,6 +249,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
         "max_date": new Date(),
         "magnitude_range": [3, 10],
         "correlation_range": [0, 1],
+        "depth_range": [0,100],
         "selected_agencies": [],
         "agency_colors": {},
         "agency_icons": [],
@@ -270,7 +278,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
         $scope.event_settings.agency_colors = {};
         for (var i = 0; i < agencies.length; i++) {
             $scope.event_settings.agency_colors[agencies[i]] =
-                event_agency_colors[i % event_agency_colors.length];
+                event_colors[i % event_colors.length];
         }
 
         // Set the available choices.

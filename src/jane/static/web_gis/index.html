@@ -37,7 +37,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-sanitize.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-animate.min.js"></script>
-    <script src="./js/angular-locale_de-de.1.2.25.js"></script>
+    <script src="./js/angular-locale_en.1.2.25.js"></script>
 
     <script src="./js/angular-strap.2.1.1.min.js"></script>
     <script src="./js/angular-strap.tpl.2.1.1.min.js"></script>
@@ -138,6 +138,7 @@
                         precision="1"
                         max="10"
                         data-slider-tooltip="hide"
+                        data-slider-handle='square'
                         value="{{ event_settings.magnitude_range }}">
                 </slider>
             </div>
@@ -145,6 +146,34 @@
                 {{ event_settings.magnitude_range[1]}}
             </div>
         </div>
+
+        <div class="row" style="padding-top:10px">
+            <div class="col-md-4">
+                <label>
+                    <i class="fa fa-arrow-down"></i>
+                    <small>Depth (km) </small>
+                </label>
+            </div>
+            <div class="col-md-1 depth-label" style="text-align: right">
+                {{ event_settings.depth_range[0]}}
+            </div>
+            <div class="col-md-6">
+                <slider
+                        ng-model="event_settings.depth_range"
+                        min="0"
+                        step="10"
+                        precision="1"
+                        max="100"
+                        data-slider-tooltip="hide"
+                        data-slider-handle='square'
+                        value="{{ event_settings.depth_range }}">
+                </slider>
+            </div>
+            <div class="col-md-1 depth-label" style="text-align: left">
+                {{ event_settings.depth_range[1]}}
+            </div>
+        </div>
+
 
         <div class="row" style="padding-top:10px">
             <div class="col-md-4">
@@ -164,6 +193,7 @@
                         precision="2"
                         max="1"
                         data-slider-tooltip="hide"
+                        data-slider-handle='square'
                         value="{{ event_settings.correlation_range }}">
                 </slider>
             </div>

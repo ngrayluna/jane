@@ -48,7 +48,6 @@ html, body {
     font-size: smaller;
 }
 
-
 .sidebar-header {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -58,6 +57,16 @@ html, body {
     width: 100% !important;
 }
 
+.slider-handle {
+    width: 10px !important; 
+    height: 10px !important;
+}
+
+.slider.slider-horizontal .slider-handle {
+    margin-left: -5px !important;
+    margin-top: 0 !important;
+}
+
 .magnitude-label {
     font-size: small;
     font-weight: 900;
@@ -65,6 +74,12 @@ html, body {
 }
 
 .correlation-label {
+    font-size: small;
+    font-weight: 900;
+    padding: 2px;
+}
+
+.depth-label {
     font-size: small;
     font-weight: 900;
     padding: 2px;
