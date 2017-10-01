@@ -160,27 +160,27 @@ class StationIndexerPlugin(IndexerPluginPoint):
                                            channel.latitude)],
                     }
 
-                    try:
-                        plt.close()
-                    except:
-                        pass
+                    # try:
+                    #     plt.close()
+                    # except:
+                    #     pass
 
-                    # Sometimes fails. Wrap in try/except.
-                    try:
-                        # Plot response.
-                        with io.BytesIO() as plot:
-                            channel.plot(min_freq=1E-3, outfile=plot)
-                            plot.seek(0)
-                            index["attachments"] = {
-                                "response": {"content-type": "image/png",
-                                             "data": plot.read()}}
-                    except Exception:
-                        pass
-                    finally:
-                        try:
-                            plt.close()
-                        except:
-                            pass
+                    # # Sometimes fails. Wrap in try/except.
+                    # try:
+                    #     # Plot response.
+                    #     with io.BytesIO() as plot:
+                    #         channel.plot(min_freq=1E-3, outfile=plot)
+                    #         plot.seek(0)
+                    #         index["attachments"] = {
+                    #             "response": {"content-type": "image/png",
+                    #                          "data": plot.read()}}
+                    # except Exception:
+                    #     pass
+                    # finally:
+                    #     try:
+                    #         plt.close()
+                    #     except:
+                    #         pass
 
                     indices.append(index)
 

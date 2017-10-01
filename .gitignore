@@ -7,3 +7,4 @@ src/jane/local_settings.py
 /static
 /media
 src/jane/static/docs
+src/jane/static/web_gis/css/bootstrap-slider.4.0.5.css

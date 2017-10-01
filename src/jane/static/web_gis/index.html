@@ -37,7 +37,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-sanitize.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-animate.min.js"></script>
-    <script src="./js/angular-locale_en.1.2.25.js"></script>
+    <!-- <script src="./js/angular-locale.1.2.25.js"></script> -->
 
     <script src="./js/angular-strap.2.1.1.min.js"></script>
     <script src="./js/angular-strap.tpl.2.1.1.min.js"></script>
@@ -323,6 +323,7 @@
             <div class="col-md-8">
                 <slider
                         ng-model="rotation"
+                        data-slider-handle='square'
                         data-slider-tooltip="hide"
                         min="0"
                         step="1"
@@ -344,6 +345,7 @@
                 <slider
                         ng-model="base_layer_opacity"
                         data-slider-tooltip="hide"
+                        data-slider-handle='square'
                         min="0"
                         step="1"
                         max="100"
@@ -351,54 +353,16 @@
                 </slider>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-4">
-                <small>Bavaria Overlay</small>
-            </div>
-            <div class="col-md-8">
-                <toggle-switch model="show_bavaria_outline"
-                               class="switch-mini"
-                               on-label="on" off-label="off">
-                </toggle-switch>
-            </div>
-        </div> -->
-  <!--       <div class="row" style="padding-top: 10cd px">
-            <div class="col-md-3">
-                <small>Zoom to</small>
-            </div>
-            <div class="col-md-9">
-                <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(0, 0, 1.75)">Default</a>
-                <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(6, 52, 4)">Europe</a>
-                <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(-75, 20, 2.5)">Americas</a>
-                <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(127, 26, 2.5)">Asia</a>
-                <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(-165, 20, 2)">Pacific</a>
-               <a type="button"
-                   class="btn btn-default btn-xs"
-                   ng-click="panTo(-20, 20, 3)">Atlantic</a>
-               
-            </div>
-        </div>
-    </div> -->
 
         <div class="container-fluid">
             <center>
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-top: 5px">
                     <b class="small">Zoom to Region</b>
                 </div>
             </center>
         </div>
             <center>
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-top: 5px">
                     <a type="button"
                        class="btn btn-default btn-xs"
                        ng-click="panTo(0, 20, 1.75)">World</a>
@@ -410,13 +374,13 @@
                        ng-click="panTo(-75, 20, 2.5)">Americas</a>
                     <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(127, 26, 2.5)">Asia</a>
+                       ng-click="panTo(127, 26, 3.25)">Asia</a>
                     <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(-165, 20, 2)">Pacific</a>
+                       ng-click="panTo(-165, 20, 2.25)">Pacific</a>
                    <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(-20, 20, 3)">Atlantic</a>
+                       ng-click="panTo(-20, 20, 2.5)">Atlantic</a>
                 </div>
             </center>
     </div>
@@ -441,7 +405,7 @@
         <div class="row">
             <center>
                 <div class="col-md-12">
-                    <i class="small">Shift + Drag on map to download multiple events</i>
+                    <i class="small">Shift + Drag on map to download multiple event quakemls</i>
                 </div>
             </center>
         </div>

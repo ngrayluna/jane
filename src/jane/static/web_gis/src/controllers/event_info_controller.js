@@ -2,7 +2,7 @@ var baynetApp = angular.module("bayNetApp");
 
 
 baynetApp.controller('eventInfoController', function($scope, $log) {
-    //for (var i=0; i < stations.stations.features.length; i++) {
+    // for (var i=0; i < stations.stations.features.length; i++) {
     //    var j = stations.stations.features[i];
     //    if (j.properties.network !== $scope.network ||
     //        j.properties.station != $scope.station) {
@@ -14,5 +14,5 @@ baynetApp.controller('eventInfoController', function($scope, $log) {
     //    $scope.channels = j.properties.channels;
     //    $log.info($scope.channels);
     //    break;
-    //}
+    // }
 });

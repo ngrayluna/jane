@@ -60,12 +60,14 @@ html, body {
 .slider-handle {
     width: 10px !important; 
     height: 10px !important;
+    opacity: .9;
 }
 
 .slider.slider-horizontal .slider-handle {
     margin-left: -5px !important;
     margin-top: 0 !important;
 }
+
 
 .magnitude-label {
     font-size: small;
