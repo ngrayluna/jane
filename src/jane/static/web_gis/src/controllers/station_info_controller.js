@@ -12,18 +12,18 @@ baynetApp.controller('stationInfoController', function ($scope, $log, stations) 
         $scope.network_name = j.properties.network_name;
         $scope.station_name = j.properties.station_name;
         $scope.channels = j.properties.channels;
-        for (var i = 0; i < $scope.channels.length; i++) {
-            var chan = $scope.channels[i];
-            // A bit ugly but I'm currently not sure how to do it in a
-            // better way. Should work well enough I guess.
-            jQuery.ajax({
-                url: chan["attachments_url"],
-                success: function (result) {
-                    chan["attachments"] = result.results;
-                },
-                async: false
-            });
-        }
+        // for (var i = 0; i < $scope.channels.length; i++) {
+        //     var chan = $scope.channels[i];
+        //     // A bit ugly but I'm currently not sure how to do it in a
+        //     // better way. Should work well enough I guess.
+        //     jQuery.ajax({
+        //         url: chan["attachments_url"],
+        //         success: function (result) {
+        //             chan["attachments"] = result.results;
+        //         },
+        //         async: false
+        //     });
+        // }
         break;
     }
 });
