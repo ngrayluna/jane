@@ -513,7 +513,8 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         tooltip_title = 'Station ' + feature.get('network') +
                             '.' + feature.get('station') +
                             '\n' + feature.get('station_name') + ', ' + feature.get('network_name') +
-                            '\n' 
+                            '\n' + 'Lat: ' + feature.get('latitude') + ' | Lng: ' + feature.get('longitude') + 
+                            '\n'
                             // + feature.get('channels').length +
                             // ' channels across timespans';
                     }
