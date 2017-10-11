@@ -118,9 +118,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
         "event_type": "str",
         "has_focal_mechanism": "bool",
         "has_moment_tensor": "bool",
-        "peak_correlation_coefficient": "float",
-        "theoretical_backazimuth": "float",
-        "epicentral_distance_km": "float",
+        "rotational_parameters": "dict",
     }
 
     def index(self, document):
@@ -129,6 +127,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
 
         :param document: The document as a memory file.
         """
+        import re
         from django.contrib.gis.geos.point import Point  # NOQA
         from obspy import read_events
 
@@ -158,11 +157,19 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
             # Parse attributes in the extra and event descriptions
             # namespaces and populate indices
             extra = event.get("extra", {})
+            rotational_parameters = {}
             dscrpt = event.get("event_descriptions", {})
 
-            pcc = float(extra['peak_correlation_coefficient']['value'])
-            tbaz = float(extra['theoretical_backazimuth']['value'])
-            dist = float(extra['epicentral_distance']['value'])
+            for name, item in extra.items():
+                match = re.match('rotational_parameters_(.*)', name)
+                if not match:
+                    continue
+                sta = match.group(1)
+                values = {}
+                values['pcc'] = float(item['peak_correlation_coefficient']['value'])
+                values['tbaz'] = float(item['theoretical_backazimuth']['value'])
+                values['dist'] = float(item['epicentral_distance']['value'])
+                rotational_parameters[sta] = values
             title_tag = '{} / {}'.format(dscrpt[0].text,dscrpt[1].text)
 
             if "public" in extra:
@@ -199,9 +206,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 "event_type": event.event_type.capitalize(),
                 "has_focal_mechanism": has_focal_mechanism,
                 "has_moment_tensor": has_moment_tensor,
-                "peak_correlation_coefficient": pcc,
-                "theoretical_backazimuth": tbaz,
-                "epicentral_distance_km": dist,
+                "rotational_parameters": rotational_parameters,
                 # The special key geometry can be used to store geographic
                 # information about the indexes geometry. Useful for very
                 # fast queries using PostGIS.
