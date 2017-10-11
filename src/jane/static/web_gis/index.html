@@ -163,7 +163,7 @@
                         min="0"
                         step="10"
                         precision="1"
-                        max="100"
+                        max="650"
                         data-slider-tooltip="hide"
                         data-slider-handle='square'
                         value="{{ event_settings.depth_range }}">
@@ -188,7 +188,7 @@
             <div class="col-md-6">
                 <slider
                         ng-model="event_settings.correlation_range"
-                        min="0"
+                        min="-1"
                         step="0.05"
                         precision="2"
                         max="1"
@@ -365,7 +365,7 @@
                 <div class="col-md-12" style="padding-top: 5px">
                     <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(0, 20, 1.75)">World</a>
+                       ng-click="panTo(0, 0, 2.25)">Default</a>
                     <a type="button"
                        class="btn btn-default btn-xs"
                        ng-click="panTo(6, 52, 4)">Europe</a>
@@ -377,10 +377,10 @@
                        ng-click="panTo(127, 26, 3.25)">Asia</a>
                     <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(-165, 20, 2.25)">Pacific</a>
+                       ng-click="panTo(-165, 20, 3.0)">Pacific</a>
                    <a type="button"
                        class="btn btn-default btn-xs"
-                       ng-click="panTo(-20, 20, 2.5)">Atlantic</a>
+                       ng-click="panTo(-20, 20, 3)">Atlantic</a>
                 </div>
             </center>
     </div>

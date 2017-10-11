@@ -213,9 +213,9 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     })
 
     $scope.center = {
-		latitude: 20,
+		latitude: 10,
         longitude: 0,
-        zoom: 1.75
+        zoom: 2.25
     };
 
     $scope.rotation = 0;
@@ -248,7 +248,7 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     $scope.event_settings = {
         "min_date": new Date("2007-07-18"),
         "max_date": new Date(),
-        "magnitude_range": [3, 10],
+        "magnitude_range": [6, 10],
         "correlation_range": [0, 1],
         "depth_range": [0,100],
         "selected_agencies": [],
