@@ -133,7 +133,6 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
 
         # Collect all indices in a list. Each index has to be a dictionary.
         indices = []
-
         inv = read_events(document, format="quakeml")
 
         for event in inv:
@@ -166,10 +165,11 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                     continue
                 sta = match.group(1)
                 values = {}
-                values['pcc'] = float(item['peak_correlation_coefficient']['value'])
-                values['tbaz'] = float(item['theoretical_backazimuth']['value'])
-                values['dist'] = float(item['epicentral_distance']['value'])
+                values['pcc'] = float(item['value']['peak_correlation_coefficient']['value'])
+                values['tbaz'] = float(item['value']['theoretical_backazimuth']['value'])
+                values['dist'] = float(item['value']['epicentral_distance']['value'])
                 rotational_parameters[sta] = values
+
             title_tag = '{} / {}'.format(dscrpt[0].text,dscrpt[1].text)
 
             if "public" in extra:
@@ -186,7 +186,7 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 evaluation_mode = extra["evaluationMode"]["value"]
             else:
                 evaluation_mode = None
-
+            
             indices.append({
                 "title_tag": title_tag,
                 "quakeml_id": str(event.resource_id),
