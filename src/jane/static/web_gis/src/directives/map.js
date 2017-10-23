@@ -311,8 +311,8 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                             (i.properties.origin_time > event_settings.max_date) ||
                             (i.properties.magnitude < event_settings.magnitude_range[0]) ||
                             (i.properties.magnitude > event_settings.magnitude_range[1]) || 
-                            (i.properties.peak_correlation_coefficient < event_settings.correlation_range[0]) ||
-                            (i.properties.peak_correlation_coefficient > event_settings.correlation_range[1]) ||
+                            (i.properties.rlas_pcc < event_settings.correlation_range[0]) ||
+                            (i.properties.rlas_pcc > event_settings.correlation_range[1]) ||
                             (i.properties.depth_in_km < event_settings.depth_range[0]) ||
                             (i.properties.depth_in_km > event_settings.depth_range[1]) ||
                             !_.contains(event_settings.selected_agencies, i.properties.agency)) {
@@ -463,12 +463,12 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
 
                 if (feature) {
                     if (detectFeatureType(feature) == "event") {
-                        var tooltip_title = feature.get("title_tag") + "\n";
-                        var ev_type = feature.get('event_type');
-                        if (ev_type == null) {
-                            ev_type = "not defined";
+                        var tooltip_title = feature.get("region") + "\n";
+                        var catalog = feature.get('catalog');
+                        if (catalog == null) {
+                            catalog = "not specified";
                         }
-                        tooltip_title += 'Event type: ' + ev_type;
+                        tooltip_title += 'Catalog: ' + catalog;
 
                         // var author = feature.get("author");
                         // if (author == null) {
@@ -547,7 +547,7 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                 if (feature) {
                     if (detectFeatureType(feature) == "event") {
                         var modal = $modal({
-                            title: feature.get("title_tag"),
+                            title: feature.get("region"),
                             template: "./templates/event_modal.tpl.html",
                             persist: false,
                             show: true});
@@ -562,6 +562,8 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                         modal.$scope.depth_in_m = feature.get("depth_in_m");
                         modal.$scope.evaluation_mode = feature.get("evaluation_mode");
                         modal.$scope.event_type = feature.get("event_type");
+                        modal.$scope.catalog = feature.get("catalog");
+                        modal.$scope.region = feature.get("region");
                         modal.$scope.latitude = feature.get("latitude");
                         modal.$scope.longitude = feature.get("longitude");
                         modal.$scope.magnitude = feature.get("magnitude");

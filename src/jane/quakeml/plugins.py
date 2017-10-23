@@ -102,7 +102,8 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
     # on. For this to work it has to know the type for each key. Possible
     # values for the type are "str", "int", "float", "bool", and "UTCDateTime".
     meta = {
-        "title_tag": "str",
+        "catalog": "str",
+        "region": "str",
         "quakeml_id": "str",
         "latitude": "float",
         "longitude": "float",
@@ -118,7 +119,10 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
         "event_type": "str",
         "has_focal_mechanism": "bool",
         "has_moment_tensor": "bool",
-        "rotational_parameters": "dict",
+        "rlas_pcc": "float",
+        "rlas_dist": "float",
+        "rlas_tbaz": "float",
+        # "rotational_parameters": "dict",
     }
 
     def index(self, document):
@@ -135,6 +139,13 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
         indices = []
         inv = read_events(document, format="quakeml")
 
+        # Determine catalog of event
+        if 'GCMT' in document:
+            catalog = 'GCMT'
+        elif 'ISC' in document:
+            catalog = 'ISC'
+    
+
         for event in inv:
             if event.origins:
                 org = event.preferred_origin() or event.origins[0]
@@ -145,6 +156,11 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 mag = event.preferred_magnitude() or event.magnitudes[0]
             else:
                 mag = None
+
+            if org.creation_info:
+                catalog = org.creation_info.author or org.creation_info.agency_id
+            else:
+                catalog = None
 
             has_focal_mechanism = False
             has_moment_tensor = False
@@ -170,7 +186,6 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 values['dist'] = float(item['value']['epicentral_distance']['value'])
                 rotational_parameters[sta] = values
 
-            title_tag = '{} / {}'.format(dscrpt[0].text,dscrpt[1].text)
 
             if "public" in extra:
                 public = extra["public"]["value"]
@@ -186,9 +201,10 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 evaluation_mode = extra["evaluationMode"]["value"]
             else:
                 evaluation_mode = None
-            
+
             indices.append({
-                "title_tag": title_tag,
+                "region": event.get("event_descriptions", {})[0].text,
+                "catalog": catalog,
                 "quakeml_id": str(event.resource_id),
                 "latitude": org.latitude if org else None,
                 "longitude": org.longitude if org else None,
@@ -203,10 +219,14 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 event.creation_info and event.creation_info.author or None,
                 "public": public,
                 "evaluation_mode": evaluation_mode,
-                "event_type": event.event_type.capitalize(),
+                "event_type": 
+                event.event_type.capitalize() if event.event_type else None,
                 "has_focal_mechanism": has_focal_mechanism,
                 "has_moment_tensor": has_moment_tensor,
-                "rotational_parameters": rotational_parameters,
+                # "rotational_parameters": rotational_parameters,
+                "rlas_pcc": rotational_parameters['RLAS']['pcc'],
+                "rlas_dist": rotational_parameters['RLAS']['dist'],
+                "rlas_tbaz": rotational_parameters['RLAS']['tbaz'],
                 # The special key geometry can be used to store geographic
                 # information about the indexes geometry. Useful for very
                 # fast queries using PostGIS.
