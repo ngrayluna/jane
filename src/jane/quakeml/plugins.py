@@ -209,7 +209,6 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 "latitude": org.latitude if org else None,
                 "longitude": org.longitude if org else None,
                 "depth_in_m": org.depth if org else None,
-                "depth_in_km": org.depth/1000 if org else None,
                 "origin_time": str(org.time) if org else None,
                 "magnitude": mag.mag if mag else None,
                 "magnitude_type": mag.magnitude_type if mag else None,

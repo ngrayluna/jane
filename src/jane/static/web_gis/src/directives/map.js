@@ -216,7 +216,6 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                     var magnitude;
                     var radius;
                     var tag;
-                    var depth;
                  
                     // Scale events from -3 to 8 from 1 to 30.0 pixel.
                     // Smallest possible value is 0.5.
@@ -553,9 +552,9 @@ app.directive('openlayers3', function($q, $log, bing_key, $modal) {
                             show: true});
 
                         // Set scope of modal.
+                        modal.$scope.attachments_url = feature.get("attachments_url");
                         modal.$scope.attachments_count = feature.get("attachments_count");
-						modal.$scope.attachments_url = feature.get("attachments_url");
-						modal.$scope.containing_document_data_url = feature.get("containing_document_data_url");
+						modal.$scope.containing_document_data_surl = feature.get("containing_document_data_url");
                         modal.$scope.url = feature.get("url");
                         modal.$scope.agency = feature.get("agency");
                         modal.$scope.author = feature.get("author");
