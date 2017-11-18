@@ -120,8 +120,6 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
         "has_focal_mechanism": "bool",
         "has_moment_tensor": "bool",
         "rlas_pcc": "float",
-        "rlas_dist": "float",
-        "rlas_tbaz": "float",
         # "rotational_parameters": "dict",
     }
 
@@ -144,6 +142,8 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
             catalog = 'GCMT'
         elif 'ISC' in document:
             catalog = 'ISC'
+        else:
+            catalog = None
     
 
         for event in inv:
@@ -186,7 +186,6 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 values['dist'] = float(item['value']['epicentral_distance']['value'])
                 rotational_parameters[sta] = values
 
-
             if "public" in extra:
                 public = extra["public"]["value"]
                 if public.lower() in ["false", "f"]:
@@ -222,10 +221,8 @@ class QuakeMLIndexerPlugin(IndexerPluginPoint):
                 event.event_type.capitalize() if event.event_type else None,
                 "has_focal_mechanism": has_focal_mechanism,
                 "has_moment_tensor": has_moment_tensor,
-                # "rotational_parameters": rotational_parameters,
                 "rlas_pcc": rotational_parameters['RLAS']['pcc'],
-                "rlas_dist": rotational_parameters['RLAS']['dist'],
-                "rlas_tbaz": rotational_parameters['RLAS']['tbaz'],
+                # "rotational_parameters": rotational_parameters,
                 # The special key geometry can be used to store geographic
                 # information about the indexes geometry. Useful for very
                 # fast queries using PostGIS.
