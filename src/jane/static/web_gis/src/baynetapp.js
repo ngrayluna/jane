@@ -248,8 +248,8 @@ module.controller("BayNetController", function($scope, $log, stations, station_c
     $scope.event_settings = {
         "min_date": new Date("2007-07-18"),
         "max_date": new Date(),
-        "magnitude_range": [3, 10],
-        "correlation_range": [0, 1],
+        "magnitude_range": [7, 10],
+        "correlation_range": [0.7, 1],
         "depth_range": [0,100],
         "selected_agencies": [],
         "agency_colors": {},
