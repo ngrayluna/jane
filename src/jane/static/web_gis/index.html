@@ -58,6 +58,12 @@
 
 <body ng-controller="BayNetController">
 
+<!--Loading screen -->
+<div id="overlay">
+<div class="spinner"></div> 
+</div>
+<!--End loading screen-->
+
 <div id="sidebar">
     <div class="container-fluid"
          ng-class="{green_background: current_user, orange_background: !current_user}">

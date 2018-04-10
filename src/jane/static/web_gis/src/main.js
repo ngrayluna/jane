@@ -30,3 +30,8 @@ function __fromMapCoods(coods) {
     return ol.proj.transform(coods, "EPSG:3857", "EPSG:4326");
 }
 
+// Loading screen //
+window.addEventListener("load", function(){
+	var load_screen = document.getElementById("overlay");
+	document.body.removeChild(overlay);
+});
