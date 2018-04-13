@@ -32,6 +32,6 @@ function __fromMapCoods(coods) {
 
 // Loading screen //
 window.addEventListener("load", function(){
-	var load_screen = document.getElementById("overlay");
+	var overlay = document.getElementById("overlay");
 	document.body.removeChild(overlay);
 });
